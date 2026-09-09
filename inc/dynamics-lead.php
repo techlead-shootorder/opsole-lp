@@ -136,11 +136,18 @@ function opsole_dynamics_create_lead(array $lead)
     $firstname = count($parts) === 2 ? $parts[0] : '';
     $lastname  = count($parts) === 2 ? $parts[1] : $full_name;
 
+    // Subject format: "UTM Source - UTM Campaign - Company Name" (empty parts skipped).
+    $subject = implode(' - ', array_filter([
+        trim($lead['utm_source'] ?? ''),
+        trim($lead['utm_campaign'] ?? ''),
+        trim($lead['company_name'] ?? ''),
+    ], static fn($v) => $v !== ''));
+
     $payload = [
         'lastname'                   => $lastname,
         'emailaddress1'              => $lead['work_email'] ?? '',
         'companyname'                => $lead['company_name'] ?? '',
-        'subject'                    => 'Zero-Wipe Migration Assessment: ' . ($lead['company_name'] ?? ''),
+        'subject'                    => $subject,
         'cr3bd_windowsfleetsize'     => $lead['fleet_size'] ?? '',
         'cr3bd_currentidentitysetup' => $lead['identity_setup'] ?? '',
         'cr3bd_utmsource'            => $lead['utm_source'] ?? '',
