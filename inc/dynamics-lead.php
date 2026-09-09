@@ -18,6 +18,16 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Write a line to wp-content/themes/<theme>/dynamics-error.log (and the PHP error log).
+ */
+function opsole_dynamics_log(string $message): void
+{
+    $line = '[' . gmdate('Y-m-d H:i:s') . ' UTC] ' . $message . PHP_EOL;
+    @file_put_contents(dirname(__DIR__) . '/dynamics-error.log', $line, FILE_APPEND | LOCK_EX);
+    error_log('[Opsole Dynamics] ' . $message);
+}
+
+/**
  * Minimal .env parser (KEY=VALUE, # comments, optional quotes). Loaded once.
  */
 function opsole_load_env_file(): array
@@ -79,6 +89,7 @@ function opsole_dynamics_get_token()
     $resource = rtrim(opsole_env('DYNAMICS_RESOURCE'), '/');
 
     if (!$tenant || !$client || !$secret || !$resource) {
+        opsole_dynamics_log('Credentials not configured (check DYNAMICS_* constants in wp-config.php).');
         return new WP_Error('dynamics_config', 'Dynamics credentials are not configured.');
     }
 
@@ -96,12 +107,14 @@ function opsole_dynamics_get_token()
     );
 
     if (is_wp_error($response)) {
+        opsole_dynamics_log('Token request transport error: ' . $response->get_error_message());
         return $response;
     }
 
     $body = json_decode(wp_remote_retrieve_body($response), true);
     if (empty($body['access_token'])) {
-        $msg = $body['error_description'] ?? 'Unknown token error';
+        $msg = $body['error_description'] ?? ('Unknown token error: ' . wp_remote_retrieve_body($response));
+        opsole_dynamics_log('Token request failed: ' . $msg);
         return new WP_Error('dynamics_token', $msg);
     }
 
@@ -128,6 +141,7 @@ function opsole_dynamics_create_lead(array $lead)
 
     $api = rtrim(opsole_env('DYNAMICS_API_URL'), '/');
     if (!$api) {
+        opsole_dynamics_log('DYNAMICS_API_URL is not configured.');
         return new WP_Error('dynamics_config', 'DYNAMICS_API_URL is not configured.');
     }
 
@@ -179,6 +193,7 @@ function opsole_dynamics_create_lead(array $lead)
     ]);
 
     if (is_wp_error($response)) {
+        opsole_dynamics_log('Lead request transport error: ' . $response->get_error_message());
         return $response;
     }
 
@@ -188,8 +203,10 @@ function opsole_dynamics_create_lead(array $lead)
         delete_transient('opsole_dynamics_token');
     }
     if ($code < 200 || $code >= 300) {
-        $body = json_decode(wp_remote_retrieve_body($response), true);
-        $msg  = $body['error']['message'] ?? ('HTTP ' . $code);
+        $raw  = wp_remote_retrieve_body($response);
+        $body = json_decode($raw, true);
+        $msg  = $body['error']['message'] ?? $raw;
+        opsole_dynamics_log("Lead create failed (HTTP {$code}): {$msg}");
         return new WP_Error('dynamics_api', $msg, ['status' => $code]);
     }
 

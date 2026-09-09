@@ -53,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         ]);
 
         if (is_wp_error($result)) {
-            error_log('[Opsole Dynamics] Lead create failed: ' . $result->get_error_message());
             $errorMessage = 'We could not submit your request right now. Please try again or email us directly.';
         } else {
             $formSuccess = true;
