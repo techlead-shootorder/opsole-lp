@@ -4,9 +4,14 @@ Template Name: Campaign
 Template Post Type: page
 */
 
+require_once __DIR__ . '/inc/dynamics-lead.php';
+
 $formSubmitted = false;
 $formSuccess = false;
 $errorMessage = '';
+$utmSource = sanitize_text_field($_GET['utm_source'] ?? '');
+$utmMedium = sanitize_text_field($_GET['utm_medium'] ?? '');
+$utmCampaign = sanitize_text_field($_GET['utm_campaign'] ?? '');
 $fullName = '';
 $workEmail = '';
 $companyName = '';
@@ -20,13 +25,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $companyName = trim($_POST['company_name'] ?? '');
     $fleetSize = trim($_POST['fleet_size'] ?? '');
     $identitySetup = trim($_POST['identity_setup'] ?? '');
+    $utmSource = sanitize_text_field($_POST['utm_source'] ?? $utmSource);
+    $utmMedium = sanitize_text_field($_POST['utm_medium'] ?? $utmMedium);
+    $utmCampaign = sanitize_text_field($_POST['utm_campaign'] ?? $utmCampaign);
+    $pageUrl = esc_url_raw($_POST['page_url'] ?? '');
 
-    if (empty($fullName) || empty($workEmail) || empty($companyName)) {
+    if (!isset($_POST['assessment_nonce']) || !wp_verify_nonce($_POST['assessment_nonce'], 'opsole_assessment')) {
+        $errorMessage = 'Your session expired. Please reload the page and try again.';
+    } elseif (!empty($_POST['website'])) {
+        // Honeypot filled in: silently treat as success without sending.
+        $formSuccess = true;
+    } elseif (empty($fullName) || empty($workEmail) || empty($companyName)) {
         $errorMessage = 'Please fill out all required fields (*).';
     } elseif (!filter_var($workEmail, FILTER_VALIDATE_EMAIL)) {
         $errorMessage = 'Please enter a valid work email address.';
     } else {
-        $formSuccess = true;
+        $result = opsole_dynamics_create_lead([
+            'full_name'      => $fullName,
+            'work_email'     => $workEmail,
+            'company_name'   => $companyName,
+            'fleet_size'     => $fleetSize,
+            'identity_setup' => $identitySetup,
+            'utm_source'     => $utmSource,
+            'utm_medium'     => $utmMedium,
+            'utm_campaign'   => $utmCampaign,
+            'page_url'       => $pageUrl ?: home_url(add_query_arg([])),
+        ]);
+
+        if (is_wp_error($result)) {
+            error_log('[Opsole Dynamics] Lead create failed: ' . $result->get_error_message());
+            $errorMessage = 'We could not submit your request right now. Please try again or email us directly.';
+        } else {
+            $formSuccess = true;
+        }
     }
 }
 ?>
@@ -1744,6 +1775,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                     <form action="#assessment" method="POST" class="assessment-form">
                         <input type="hidden" name="action" value="assessment">
+                        <?php wp_nonce_field('opsole_assessment', 'assessment_nonce'); ?>
+                        <input type="hidden" name="utm_source" id="utm_source" value="<?= esc_attr($utmSource) ?>">
+                        <input type="hidden" name="utm_medium" id="utm_medium" value="<?= esc_attr($utmMedium) ?>">
+                        <input type="hidden" name="utm_campaign" id="utm_campaign" value="<?= esc_attr($utmCampaign) ?>">
+                        <input type="hidden" name="page_url" id="page_url" value="">
+                        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"
+                            style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">
 
                         <div class="form-row-2col">
                             <div class="form-group">
@@ -2386,6 +2424,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 behavior: 'smooth'
             });
         }
+    </script>
+    <script>
+        // Persist UTM params across the visit and stamp them into the assessment form.
+        (function () {
+            try {
+                var params = new URLSearchParams(window.location.search);
+                ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (key) {
+                    var fromUrl = params.get(key);
+                    if (fromUrl) sessionStorage.setItem(key, fromUrl);
+                    var el = document.getElementById(key);
+                    if (el && !el.value) el.value = fromUrl || sessionStorage.getItem(key) || '';
+                });
+                var pageUrl = document.getElementById('page_url');
+                if (pageUrl && !pageUrl.value) pageUrl.value = window.location.href.split('#')[0];
+            } catch (e) { /* storage unavailable: ignore */ }
+        })();
     </script>
 </body>
 
