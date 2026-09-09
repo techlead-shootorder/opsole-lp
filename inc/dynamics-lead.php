@@ -136,10 +136,15 @@ function opsole_dynamics_create_lead(array $lead)
     $firstname = count($parts) === 2 ? $parts[0] : '';
     $lastname  = count($parts) === 2 ? $parts[1] : $full_name;
 
-    // Subject format: "UTM Source - UTM Campaign - Company Name" (empty parts skipped).
+    // Organic / direct traffic has no UTM parameters: label it so sales can tell it apart.
+    $utm_source   = trim($lead['utm_source'] ?? '') ?: 'organic';
+    $utm_medium   = trim($lead['utm_medium'] ?? '') ?: 'none';
+    $utm_campaign = trim($lead['utm_campaign'] ?? '') ?: 'none';
+
+    // Subject format: "UTM Source - UTM Campaign - Company Name".
     $subject = implode(' - ', array_filter([
-        trim($lead['utm_source'] ?? ''),
-        trim($lead['utm_campaign'] ?? ''),
+        $utm_source,
+        $utm_campaign,
         trim($lead['company_name'] ?? ''),
     ], static fn($v) => $v !== ''));
 
@@ -150,9 +155,9 @@ function opsole_dynamics_create_lead(array $lead)
         'subject'                    => $subject,
         'cr3bd_windowsfleetsize'     => $lead['fleet_size'] ?? '',
         'cr3bd_currentidentitysetup' => $lead['identity_setup'] ?? '',
-        'cr3bd_utmsource'            => $lead['utm_source'] ?? '',
-        'cr3bd_utmmedium'            => $lead['utm_medium'] ?? '',
-        'cr3bd_utmcampaign'          => $lead['utm_campaign'] ?? '',
+        'cr3bd_utmsource'            => $utm_source,
+        'cr3bd_utmmedium'            => $utm_medium,
+        'cr3bd_utmcampaign'          => $utm_campaign,
         'cr3bd_pageurl'              => $lead['page_url'] ?? '',
     ];
     if ($firstname !== '') {
