@@ -56,6 +56,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $errorMessage = 'We could not submit your request right now. Please try again or email us directly.';
         } else {
             $formSuccess = true;
+            $thankYouUrl = opsole_get_thank_you_url($fullName, $workEmail);
+            if (!headers_sent()) {
+                if (function_exists('wp_redirect')) {
+                    wp_redirect($thankYouUrl);
+                } else {
+                    header('Location: ' . $thankYouUrl);
+                }
+                exit;
+            }
         }
     }
 }
@@ -1761,10 +1770,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                     <?php if ($formSubmitted): ?>
                         <?php if ($formSuccess): ?>
-                            <div class="alert-box alert-success">
-                                Thank you, <?= htmlspecialchars($fullName) ?>! Your assessment request has been received. Our
-                                team will contact you shortly at <?= htmlspecialchars($workEmail) ?>.
-                            </div>
+                            <?php 
+                                $jsThankYouUrl = opsole_get_thank_you_url($fullName, $workEmail);
+                            ?>
+                            <script>
+                                window.location.href = <?= json_encode($jsThankYouUrl) ?>;
+                            </script>
                         <?php else: ?>
                             <div class="alert-box alert-error">
                                 <?= htmlspecialchars($errorMessage) ?>
@@ -1772,7 +1783,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <?php endif; ?>
                     <?php endif; ?>
 
-                    <form action="#assessment" method="POST" class="assessment-form">
+                    <form action="" method="POST" class="assessment-form">
                         <input type="hidden" name="action" value="assessment">
                         <?php wp_nonce_field('opsole_assessment', 'assessment_nonce'); ?>
                         <input type="hidden" name="utm_source" id="utm_source" value="<?= esc_attr($utmSource) ?>">

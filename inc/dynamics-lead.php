@@ -212,3 +212,88 @@ function opsole_dynamics_create_lead(array $lead)
 
     return true;
 }
+
+if (!function_exists('opsole_get_campaign_url')) {
+    function opsole_get_campaign_url(): string
+    {
+        if (!empty($_SERVER['HTTP_REFERER'])) {
+            $referer = $_SERVER['HTTP_REFERER'];
+            $host = $_SERVER['HTTP_HOST'] ?? '';
+            if ($host && strpos($referer, $host) !== false && strpos($referer, 'thank-you') === false) {
+                return $referer;
+            }
+        }
+
+        if (function_exists('home_url')) {
+            if (function_exists('get_page_by_path') && function_exists('get_permalink')) {
+                $page = get_page_by_path('lp/campaign') ?: get_page_by_path('campaign');
+                if ($page && isset($page->ID)) {
+                    return get_permalink($page->ID);
+                }
+            }
+            return home_url('/lp/campaign/');
+        }
+
+        return 'https://opsole.com/lp/campaign/';
+    }
+}
+
+if (!function_exists('opsole_get_thank_you_url')) {
+    function opsole_get_thank_you_url(string $fullName = '', string $workEmail = ''): string
+    {
+        $queryParams = '';
+        if ($fullName !== '' || $workEmail !== '') {
+            $queryParams = '?name=' . urlencode($fullName) . '&email=' . urlencode($workEmail);
+        }
+
+        // Strictly target /lp/thank-you/ (no /campaign/ in the URL)
+        $targetPath = '/lp/thank-you/';
+
+        if (function_exists('home_url')) {
+            return home_url($targetPath) . $queryParams;
+        }
+
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+
+        return $protocol . $host . $targetPath . $queryParams;
+    }
+}
+
+if (!function_exists('opsole_handle_thank_you_route_inc')) {
+    function opsole_handle_thank_you_route_inc() {
+        if (is_admin()) {
+            return;
+        }
+
+        $requestUri = strtok($_SERVER['REQUEST_URI'] ?? '', '?');
+        $path = trim($requestUri, '/');
+        $lastSegment = basename($path);
+        $targetSlugs = ['thank-you', 'thank-you.php'];
+
+        if (in_array($path, $targetSlugs, true) || in_array($lastSegment, $targetSlugs, true)) {
+            status_header(200);
+            global $wp_query;
+            if (is_object($wp_query)) {
+                $wp_query->is_404 = false;
+                $wp_query->is_page = true;
+                $wp_query->is_singular = true;
+            }
+
+            $file = dirname(__DIR__) . '/thank-you.php';
+            if (file_exists($file)) {
+                include $file;
+                exit;
+            }
+        }
+    }
+}
+
+if (function_exists('add_action')) {
+    add_action('init', 'opsole_handle_thank_you_route_inc', 1);
+    add_action('parse_request', 'opsole_handle_thank_you_route_inc', 1);
+    add_action('template_redirect', 'opsole_handle_thank_you_route_inc', 1);
+}
+
+
+
