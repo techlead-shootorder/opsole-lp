@@ -11,7 +11,7 @@ $email = isset($_GET['email']) ? trim(strip_tags($_GET['email'])) : '';
 $displayName = !empty($name) ? htmlspecialchars($name, ENT_QUOTES, 'UTF-8') : '';
 $displayEmail = !empty($email) ? htmlspecialchars($email, ENT_QUOTES, 'UTF-8') : '';
 
-$themeUri = function_exists('get_template_directory_uri') ? get_template_directory_uri() : '.';
+$themeUri = function_exists('get_stylesheet_directory_uri') ? get_stylesheet_directory_uri() : (function_exists('get_template_directory_uri') ? get_template_directory_uri() : '.');
 $campaignUrl = opsole_get_campaign_url();
 ?>
 <!DOCTYPE html>

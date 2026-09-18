@@ -68,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         }
     }
 }
+$themeUri = function_exists('get_stylesheet_directory_uri') ? get_stylesheet_directory_uri() : (function_exists('get_template_directory_uri') ? get_template_directory_uri() : '.');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -1662,7 +1663,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <header class="header">
         <div class="header-inner">
             <a href="#">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/logo-opsole.svg" alt="Opsole Logo"
+                <img src="<?= $themeUri ?>/images/logo-opsole.svg" alt="Opsole Logo"
                     class="brand-logo-img">
             </a>
 
@@ -1712,7 +1713,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </p>
 
                 <div class="readiness-callout">
-                    <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-25.svg" alt="Check" width="13"
+                    <img src="<?= $themeUri ?>/icons/Icon-25.svg" alt="Check" width="13"
                         height="13">
                     <span class="readiness-text">Complete the form to claim your readiness audit</span>
                 </div>
@@ -1720,21 +1721,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <div class="hero-checklist">
                     <div class="check-item">
                         <div class="check-icon-circle">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-23.svg" alt="Check"
+                            <img src="<?= $themeUri ?>/icons/Icon-23.svg" alt="Check"
                                 width="9" height="9">
                         </div>
                         <span class="check-item-text">Live 5-minute in-place conversion test</span>
                     </div>
                     <div class="check-item">
                         <div class="check-icon-circle">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-23.svg" alt="Check"
+                            <img src="<?= $themeUri ?>/icons/Icon-23.svg" alt="Check"
                                 width="9" height="9">
                         </div>
                         <span class="check-item-text">Comprehensive device readiness assessment</span>
                     </div>
                     <div class="check-item">
                         <div class="check-icon-circle">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-23.svg" alt="Check"
+                            <img src="<?= $themeUri ?>/icons/Icon-23.svg" alt="Check"
                                 width="9" height="9">
                         </div>
                         <span class="check-item-text">Custom ROI & migration roadmap</span>
@@ -1743,22 +1744,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                 <div class="hero-tags-row">
                     <div class="hero-tag">
-                        <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-21.svg" alt="Icon" width="11"
+                        <img src="<?= $themeUri ?>/icons/Icon-21.svg" alt="Icon" width="11"
                             height="13">
                         5–6 Minutes per Device
                     </div>
                     <div class="hero-tag">
-                        <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-20.svg" alt="Icon" width="12"
+                        <img src="<?= $themeUri ?>/icons/Icon-20.svg" alt="Icon" width="12"
                             height="12">
                         In-Place Migration
                     </div>
                     <div class="hero-tag">
-                        <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-19.svg" alt="Icon" width="16"
+                        <img src="<?= $themeUri ?>/icons/Icon-19.svg" alt="Icon" width="16"
                             height="11">
                         Remote Ready
                     </div>
                     <div class="hero-tag">
-                        <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-34.svg" alt="Icon" width="14"
+                        <img src="<?= $themeUri ?>/icons/Icon-34.svg" alt="Icon" width="14"
                             height="14">
                         No VPN Required
                     </div>
@@ -1770,7 +1771,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <div class="glow-behind-card"></div>
                 <div class="hero-form-card">
                     <div class="form-top-badge">
-                        <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-35.svg" alt="Badge Icon"
+                        <img src="<?= $themeUri ?>/icons/Icon-35.svg" alt="Badge Icon"
                             width="10" height="13">
                         <span class="form-top-badge-text">FREE ENTERPRISE ASSESSMENT</span>
                     </div>
@@ -1848,7 +1849,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <button type="submit" class="form-submit-btn">
                             <span>Get Free Assessment & Live Demo</span>
                             <div class="btn-arrow-box">
-                                <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-1.svg" alt="Arrow"
+                                <img src="<?= $themeUri ?>/icons/Icon-1.svg" alt="Arrow"
                                     width="12" height="12">
                             </div>
                         </button>
@@ -1856,17 +1857,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                     <div class="form-footer-notes">
                         <div class="form-note-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-30.svg" alt="Note Icon"
+                            <img src="<?= $themeUri ?>/icons/Icon-30.svg" alt="Note Icon"
                                 width="12" height="12">
                             <span>No credit card required</span>
                         </div>
                         <div class="form-note-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-30.svg" alt="Note Icon"
+                            <img src="<?= $themeUri ?>/icons/Icon-30.svg" alt="Note Icon"
                                 width="12" height="12">
                             <span>5-minute live pilot</span>
                         </div>
                         <div class="form-note-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-28.svg" alt="Security Icon"
+                            <img src="<?= $themeUri ?>/icons/Icon-28.svg" alt="Security Icon"
                                 width="13" height="12">
                             <span>SOC 2 & ISO 27001</span>
                         </div>
@@ -1894,7 +1895,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <div class="card-problem">
                         <div>
                             <div class="card-icon-red">
-                                <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-18.svg"
+                                <img src="<?= $themeUri ?>/icons/Icon-18.svg"
                                     alt="Hours Icon" width="23" height="23">
                             </div>
                             <h3 class="card-problem-title">Hours of IT & Employee Time</h3>
@@ -1912,7 +1913,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <div class="card-problem">
                         <div>
                             <div class="card-icon-red">
-                                <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-17.svg"
+                                <img src="<?= $themeUri ?>/icons/Icon-17.svg"
                                     alt="Disruption Icon" width="22" height="17">
                             </div>
                             <h3 class="card-problem-title">Disrupted User Experience</h3>
@@ -1931,7 +1932,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <div class="card-problem">
                         <div>
                             <div class="card-icon-red">
-                                <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-16.svg"
+                                <img src="<?= $themeUri ?>/icons/Icon-16.svg"
                                     alt="Remote Icon" width="23" height="23">
                             </div>
                             <h3 class="card-problem-title">Remote Workforce Challenges</h3>
@@ -1984,7 +1985,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <!-- Source State -->
                         <div class="pipeline-step-card step-white">
                             <div class="step-icon-box icon-box-light">
-                                <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-15.svg"
+                                <img src="<?= $themeUri ?>/icons/Icon-15.svg"
                                     alt="Source State Icon" width="18" height="19">
                             </div>
                             <h4 class="step-title light">Source State</h4>
@@ -1995,7 +1996,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <!-- Opsole Migrate -->
                         <div class="pipeline-step-card step-dark">
                             <div class="step-icon-box icon-box-green">
-                                <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-14.svg"
+                                <img src="<?= $themeUri ?>/icons/Icon-14.svg"
                                     alt="Opsole Migrate Icon" width="17" height="24">
                             </div>
                             <h4 class="step-title dark">Opsole Migrate</h4>
@@ -2006,7 +2007,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <!-- Target State -->
                         <div class="pipeline-step-card step-white">
                             <div class="step-icon-box icon-box-light">
-                                <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-12.svg"
+                                <img src="<?= $themeUri ?>/icons/Icon-12.svg"
                                     alt="Target State Icon" width="22" height="21">
                             </div>
                             <h4 class="step-title light">Target State</h4>
@@ -2029,7 +2030,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <div class="cards-grid-4" id="features-slider">
                     <div class="card-feature">
                         <div class="feature-icon-box">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-32.svg" alt="Feature Icon"
+                            <img src="<?= $themeUri ?>/icons/Icon-32.svg" alt="Feature Icon"
                                 width="14" height="20">
                         </div>
                         <h3 class="feature-title">No Wipe & Load</h3>
@@ -2039,7 +2040,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                     <div class="card-feature">
                         <div class="feature-icon-box">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-11.svg" alt="Feature Icon"
+                            <img src="<?= $themeUri ?>/icons/Icon-11.svg" alt="Feature Icon"
                                 width="17" height="17">
                         </div>
                         <h3 class="feature-title">Preserve the User Environment</h3>
@@ -2050,7 +2051,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                     <div class="card-feature">
                         <div class="feature-icon-box">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-31.svg" alt="Feature Icon"
+                            <img src="<?= $themeUri ?>/icons/Icon-31.svg" alt="Feature Icon"
                                 width="18" height="16">
                         </div>
                         <h3 class="feature-title">Migrate From Anywhere</h3>
@@ -2060,7 +2061,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                     <div class="card-feature">
                         <div class="feature-icon-box">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-24.svg" alt="Feature Icon"
+                            <img src="<?= $themeUri ?>/icons/Icon-24.svg" alt="Feature Icon"
                                 width="20" height="15">
                         </div>
                         <h3 class="feature-title">Agentless Architecture</h3>
@@ -2143,7 +2144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <div>
                             <div class="pathway-top">
                                 <span class="pathway-number">PATHWAY 01</span>
-                                <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-10.svg"
+                                <img src="<?= $themeUri ?>/icons/Icon-10.svg"
                                     alt="Pathway Icon" width="18" height="18">
                             </div>
                             <h3 class="card-problem-title">AD Joined → Entra ID Joined</h3>
@@ -2153,7 +2154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         </div>
                         <div class="pathway-footer">
                             <span>Direct on-prem decoupler</span>
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-13.svg" alt="Check Icon"
+                            <img src="<?= $themeUri ?>/icons/Icon-13.svg" alt="Check Icon"
                                 width="13" height="13">
                         </div>
                     </div>
@@ -2163,7 +2164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <div>
                             <div class="pathway-top">
                                 <span class="pathway-number">PATHWAY 02</span>
-                                <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-27.svg"
+                                <img src="<?= $themeUri ?>/icons/Icon-27.svg"
                                     alt="Pathway Icon" width="24" height="23">
                             </div>
                             <h3 class="card-problem-title">Hybrid Joined → Entra ID Joined</h3>
@@ -2172,7 +2173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         </div>
                         <div class="pathway-footer">
                             <span>Clean hybrid detachment</span>
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-13.svg" alt="Check Icon"
+                            <img src="<?= $themeUri ?>/icons/Icon-13.svg" alt="Check Icon"
                                 width="13" height="13">
                         </div>
                     </div>
@@ -2182,7 +2183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <div>
                             <div class="pathway-top">
                                 <span class="pathway-number">PATHWAY 03</span>
-                                <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-9.svg"
+                                <img src="<?= $themeUri ?>/icons/Icon-9.svg"
                                     alt="Pathway Icon" width="22" height="20">
                             </div>
                             <h3 class="card-problem-title">Entra ID Tenant → Entra ID Tenant</h3>
@@ -2191,7 +2192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         </div>
                         <div class="pathway-footer">
                             <span>Ideal for M&A consolidations</span>
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-13.svg" alt="Check Icon"
+                            <img src="<?= $themeUri ?>/icons/Icon-13.svg" alt="Check Icon"
                                 width="13" height="13">
                         </div>
                     </div>
@@ -2224,7 +2225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <div class="hero-checklist" style="margin-top: 16px;">
                         <div class="check-item">
                             <div class="check-icon-circle">
-                                <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-8.svg" alt="Check"
+                                <img src="<?= $themeUri ?>/icons/Icon-8.svg" alt="Check"
                                     width="11" height="8">
                             </div>
                             <span class="check-item-text">Dedicated migration architects and assigned Microsoft
@@ -2232,7 +2233,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         </div>
                         <div class="check-item">
                             <div class="check-icon-circle">
-                                <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-8.svg" alt="Check"
+                                <img src="<?= $themeUri ?>/icons/Icon-8.svg" alt="Check"
                                     width="11" height="8">
                             </div>
                             <span class="check-item-text">Custom cutover runbooks tailored for security &
@@ -2245,11 +2246,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <div class="card-enterprise-max">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="tier-badge">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-1.svg" alt="Star"
+                            <img src="<?= $themeUri ?>/icons/Icon-1.svg" alt="Star"
                                 width="12" height="11">
                             TIER 1 ENTERPRISE
                         </div>
-                        <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-5.svg" alt="Enterprise Star"
+                        <img src="<?= $themeUri ?>/icons/Icon-5.svg" alt="Enterprise Star"
                             width="29" height="28">
                     </div>
 
@@ -2259,22 +2260,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                     <div class="enterprise-checklist">
                         <div class="check-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-4.svg" alt="Check"
+                            <img src="<?= $themeUri ?>/icons/Icon-4.svg" alt="Check"
                                 width="17" height="17">
                             <span>Full Opsole Migrate License</span>
                         </div>
                         <div class="check-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-4.svg" alt="Check"
+                            <img src="<?= $themeUri ?>/icons/Icon-4.svg" alt="Check"
                                 width="17" height="17">
                             <span>24/7 Email & Remote Support</span>
                         </div>
                         <div class="check-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-4.svg" alt="Check"
+                            <img src="<?= $themeUri ?>/icons/Icon-4.svg" alt="Check"
                                 width="17" height="17">
                             <span>Full Admin Training</span>
                         </div>
                         <div class="check-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-4.svg" alt="Check"
+                            <img src="<?= $themeUri ?>/icons/Icon-4.svg" alt="Check"
                                 width="17" height="17">
                             <span>Hands-On Rollout Guidance</span>
                         </div>
@@ -2282,7 +2283,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                     <a href="#assessment" class="btn-enterprise-inquire">
                         <span>Inquire About Enterprise Max</span>
-                        <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-33.svg" alt="Arrow" width="12"
+                        <img src="<?= $themeUri ?>/icons/Icon-33.svg" alt="Arrow" width="12"
                             height="12">
                     </a>
                 </div>
@@ -2305,25 +2306,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <!-- Trust Badges Grid -->
             <div class="trust-grid-4">
                 <div class="trust-card">
-                    <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-26.svg" alt="Microsoft Partner"
+                    <img src="<?= $themeUri ?>/icons/Icon-26.svg" alt="Microsoft Partner"
                         width="29" height="28">
                     <h4 class="trust-title">Microsoft Partner</h4>
                     <span class="trust-desc">Validated Cloud Solutions</span>
                 </div>
                 <div class="trust-card">
-                    <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-22.svg" alt="SOC 2" width="21"
+                    <img src="<?= $themeUri ?>/icons/Icon-22.svg" alt="SOC 2" width="21"
                         height="27">
                     <h4 class="trust-title">SOC 2 Compliant</h4>
                     <span class="trust-desc">Type II Certified Architecture</span>
                 </div>
                 <div class="trust-card">
-                    <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-3.svg" alt="ISO 27001" width="21"
+                    <img src="<?= $themeUri ?>/icons/Icon-3.svg" alt="ISO 27001" width="21"
                         height="28">
                     <h4 class="trust-title">ISO 27001:2022</h4>
                     <span class="trust-desc">Information Security Mgmt</span>
                 </div>
                 <div class="trust-card">
-                    <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-7.svg" alt="ISO 9001" width="21"
+                    <img src="<?= $themeUri ?>/icons/Icon-7.svg" alt="ISO 9001" width="21"
                         height="28">
                     <h4 class="trust-title">ISO 9001:2015</h4>
                     <span class="trust-desc">Quality Management Process</span>
@@ -2333,7 +2334,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <!-- Data Security Banner -->
             <div class="data-security-banner">
                 <div class="security-icon-box">
-                    <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-6.svg" alt="Shield Icon" width="24"
+                    <img src="<?= $themeUri ?>/icons/Icon-6.svg" alt="Shield Icon" width="24"
                         height="30">
                 </div>
                 <div style="flex: 1;">
@@ -2342,7 +2343,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         Permissions are updated locally during migration.</p>
                 </div>
                 <div class="security-badge">
-                    <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon.svg" alt="Transfer Icon" width="15"
+                    <img src="<?= $themeUri ?>/icons/Icon.svg" alt="Transfer Icon" width="15"
                         height="15">
                     <span>Zero Local Data Transfer</span>
                 </div>
@@ -2356,11 +2357,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <div class="cta-btn-group">
                     <a href="#assessment" class="btn-cta-green">
                         <span>Book a Live Demo</span>
-                        <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon-13.svg" alt="Arrow" width="13"
+                        <img src="<?= $themeUri ?>/icons/Icon-13.svg" alt="Arrow" width="13"
                             height="13">
                     </a>
                     <a href="#assessment" class="btn-cta-white">
-                        <img src="<?php echo get_template_directory_uri(); ?>/icons/Icon.svg" alt="Check Icon"
+                        <img src="<?= $themeUri ?>/icons/Icon.svg" alt="Check Icon"
                             width="17" height="17">
                         <span>Start a Readiness Review</span>
                     </a>
@@ -2405,7 +2406,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <footer class="footer">
         <div class="footer-inner">
             <a href="#">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/logo-opsole.svg" alt="Opsole Logo"
+                <img src="<?= $themeUri ?>/images/logo-opsole.svg" alt="Opsole Logo"
                     class="brand-logo-img" style="height:36px;">
             </a>
 
